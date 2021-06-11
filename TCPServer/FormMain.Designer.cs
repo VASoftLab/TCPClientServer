@@ -53,6 +53,7 @@ namespace TCPServer
             this.btDisconnect.TabIndex = 15;
             this.btDisconnect.Text = "DISCONNECT";
             this.btDisconnect.UseVisualStyleBackColor = true;
+            this.btDisconnect.Click += new System.EventHandler(this.btDisconnect_Click);
             // 
             // btConnect
             // 

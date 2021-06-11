@@ -19,6 +19,8 @@ namespace TCPServer
         TcpListener server;
         TcpClient client;
 
+        private bool flag = true;
+
         NetworkStream stream;
 
         public FormMain()
@@ -36,7 +38,17 @@ namespace TCPServer
             Close();
         }
 
-        private void btConnect_Click(object sender, EventArgs e)
+        private async void btConnect_Click(object sender, EventArgs e)
+        {
+            flag = true;
+            
+            lbConnectionStatus.Text = $"CONNECTION STATUS: ON";
+            lbConnectionStatus.ForeColor = Color.Green;
+
+            await ListenAsync();            
+        }
+
+        private async Task ListenAsync()
         {
             int.TryParse(tbServerPort.Text, out port);
             address = IPAddress.Parse(tbServerIP.Text);
@@ -44,11 +56,11 @@ namespace TCPServer
 
             server.Start();
 
-            while (true)
+            while (flag)
             {
                 try
                 {
-                    client = server.AcceptTcpClient();
+                    client = await server.AcceptTcpClientAsync();
                     stream = client.GetStream();
 
                     try
@@ -80,11 +92,43 @@ namespace TCPServer
                         client.Close();
                     }
                 }
-                catch
+                catch (Exception E)
                 {
-                    server.Stop();
+                    if (server.Server.Connected)
+                        server.Stop();
+
                     break;
                 }
+            }
+
+            if (!flag)
+            {
+                server.Stop();
+            }
+        }
+
+        private void btDisconnect_Click(object sender, EventArgs e)
+        {
+            flag = false;
+            
+            if (stream != null)
+                stream.Close();
+            
+            if (client != null)
+                client.Close();
+
+            
+            server.Stop();
+
+            if (server.Server.Connected)
+            {
+                lbConnectionStatus.Text = $"CONNECTION STATUS: ON";
+                lbConnectionStatus.ForeColor = Color.Green;                
+            }
+            else
+            {
+                lbConnectionStatus.Text = $"CONNECTION STATUS: OFF";
+                lbConnectionStatus.ForeColor = Color.Red;
             }
         }
     }

@@ -44,6 +44,7 @@ namespace TCPClient
             this.lbMessage = new System.Windows.Forms.Label();
             this.btSend = new System.Windows.Forms.Button();
             this.tbAnswer = new System.Windows.Forms.TextBox();
+            this.btSendHack = new System.Windows.Forms.Button();
             this.ssMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -188,11 +189,22 @@ namespace TCPClient
             this.tbAnswer.Size = new System.Drawing.Size(204, 22);
             this.tbAnswer.TabIndex = 14;
             // 
+            // btSendHack
+            // 
+            this.btSendHack.Location = new System.Drawing.Point(12, 176);
+            this.btSendHack.Name = "btSendHack";
+            this.btSendHack.Size = new System.Drawing.Size(150, 23);
+            this.btSendHack.TabIndex = 15;
+            this.btSendHack.Text = "SEND";
+            this.btSendHack.UseVisualStyleBackColor = true;
+            this.btSendHack.Click += new System.EventHandler(this.btSendHack_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(384, 261);
+            this.Controls.Add(this.btSendHack);
             this.Controls.Add(this.tbAnswer);
             this.Controls.Add(this.btSend);
             this.Controls.Add(this.tbMessage);
@@ -236,6 +248,7 @@ namespace TCPClient
         private System.Windows.Forms.Label lbMessage;
         private System.Windows.Forms.Button btSend;
         private System.Windows.Forms.TextBox tbAnswer;
+        private System.Windows.Forms.Button btSendHack;
     }
 }
 
